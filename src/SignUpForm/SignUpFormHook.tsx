@@ -9,7 +9,7 @@ import {
   Text,
   Alert
 } from "@kiwicom/orbit-components"
-import { signUpValidate, displayError } from "./helpers"
+import { signUpValidate, signUpValidationSchema, displayError } from "./helpers"
 import { SignUpFormValues } from "./types";
 
 export default function SignUpFormHook() {
@@ -23,7 +23,8 @@ export default function SignUpFormHook() {
       terms: false,
       jobType: ""
     },
-    validate: signUpValidate, // TODO create validationSchema instead of validate
+    // validate: signUpValidate,
+    validationSchema: signUpValidationSchema,
     onSubmit: async (values: SignUpFormValues, { resetForm }: FormikHelpers<SignUpFormValues>) => {
       await new Promise((r) => setTimeout(r, 1000))
       // setStatus("success") // resetForm will reset status as well, so cannot use formik.status for showing success alert

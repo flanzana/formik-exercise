@@ -1,3 +1,4 @@
+import * as Yup from "yup"
 import { SignUpFormErrors, SignUpFormValues } from "./types";
 
 type DisplayError = (error: string | undefined, isTouched: boolean | undefined) => (string | null)
@@ -69,3 +70,27 @@ export const signUpValidate: SignUpValidate = (values) => {
 
   return errors
 }
+
+export const signUpValidationSchema = Yup.object({
+  firstName: Yup.string()
+    .min(2, 'Too short')
+    .max(10, 'Must be 10 characters or less')
+    .required('Required first name'),
+  lastName: Yup.string()
+    .min(2, 'Too short')
+    .max(15, 'Must be 15 characters or less')
+    .required('Required last name'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Required email address'),
+  terms: Yup.boolean()
+    .required('You must accept the terms and conditions.')
+    .oneOf([true], 'You must accept the terms and conditions.'),
+  jobType: Yup.string()
+    .oneOf(
+      ['designer', 'developer', 'qaTester', 'productManager'],
+      'Invalid Job Type'
+    )
+    // .required('Required job type'),
+    .notRequired(),
+})
