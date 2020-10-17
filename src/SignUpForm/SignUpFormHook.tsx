@@ -9,8 +9,9 @@ import {
   Text,
   Alert
 } from "@kiwicom/orbit-components"
-import { signUpValidate, signUpValidationSchema, displayError } from "./helpers"
+import { signUpValidate, signUpValidationSchema } from "./helpers"
 import { SignUpFormValues } from "./types";
+import { displayError } from "../commonFormikComponents/helpers";
 
 export default function SignUpFormHook() {
   const [submittedValues, setSubmittedValues] = useState("")

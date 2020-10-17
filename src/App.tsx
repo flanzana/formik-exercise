@@ -1,19 +1,19 @@
 import React from 'react';
-import { Stack, TextLink, Card, CardSection } from "@kiwicom/orbit-components"
+import { Stack, Card, CardSection } from "@kiwicom/orbit-components"
 import SignUpFormHook from "./SignUpForm/SignUpFormHook";
+import SignUpFormContext from "./SignUpForm/SignUpFormContext";
 
 function App() {
   return (
-    <Stack>
-      <TextLink
-        href="https://formik.org/docs/tutorial"
-        external
-      >
-        Formik tutorial
-      </TextLink>
-      <Card title="Sign Up Form">
+    <Stack direction="row">
+      <Card title="Sign Up Form (useFormik hook)">
         <CardSection>
           <SignUpFormHook />
+        </CardSection>
+      </Card>
+      <Card title="Sign Up Form (Formik context)">
+        <CardSection>
+          <SignUpFormContext />
         </CardSection>
       </Card>
     </Stack>

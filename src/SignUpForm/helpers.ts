@@ -1,10 +1,6 @@
 import * as Yup from "yup"
 import { SignUpFormErrors, SignUpFormValues } from "./types";
 
-type DisplayError = (error: string | undefined, isTouched: boolean | undefined) => (string | null)
-export const displayError: DisplayError = (error, isTouched) =>
-  error && isTouched ? error : null
-
 type SignUpValidate = (values: SignUpFormValues) => SignUpFormErrors | {}
 export const signUpValidate: SignUpValidate = (values) => {
   let errors = {}
