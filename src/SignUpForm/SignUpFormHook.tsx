@@ -1,17 +1,9 @@
 import React, { useState } from "react"
 import { FormikHelpers, useFormik } from "formik"
-import {
-  Stack,
-  Button,
-  InputField,
-  Checkbox,
-  Select,
-  Text,
-  Alert
-} from "@kiwicom/orbit-components"
+import { Stack, Button, InputField, Checkbox, Select, Text, Alert } from "@kiwicom/orbit-components"
 import { signUpValidate, signUpValidationSchema } from "./helpers"
-import { SignUpFormValues } from "./types";
-import { displayError } from "../commonFormikComponents/helpers";
+import { SignUpFormValues } from "./types"
+import { displayError } from "../commonFormikComponents/helpers"
 
 export default function SignUpFormHook() {
   const [submittedValues, setSubmittedValues] = useState("")
@@ -22,16 +14,16 @@ export default function SignUpFormHook() {
       lastName: "",
       email: "",
       terms: false,
-      jobType: ""
+      jobType: "",
     },
     // validate: signUpValidate,
     validationSchema: signUpValidationSchema,
     onSubmit: async (values: SignUpFormValues, { resetForm }: FormikHelpers<SignUpFormValues>) => {
-      await new Promise((r) => setTimeout(r, 1000))
+      await new Promise(r => setTimeout(r, 1000))
       // setStatus("success") // resetForm will reset status as well, so cannot use formik.status for showing success alert
       setSubmittedValues(JSON.stringify(formik.values, null, 2))
       resetForm()
-    }
+    },
   })
 
   return (
@@ -41,10 +33,7 @@ export default function SignUpFormHook() {
           label="First Name"
           name="firstName"
           type="text"
-          error={displayError(
-            formik.errors.firstName,
-            formik.touched.firstName
-          )}
+          error={displayError(formik.errors.firstName, formik.touched.firstName)}
           // {...formik.getFieldProps("firstName")} // onChange, onBlur, value, checked (typescript errors!!)
           onChange={formik.handleChange}
           onBlur={ev => formik.handleBlur(ev)}
@@ -78,7 +67,7 @@ export default function SignUpFormHook() {
             { label: "Designer", value: "designer" },
             { label: "Developer", value: "developer" },
             { label: "QA Tester", value: "qaTester" },
-            { label: "Product Manager", value: "productManager" }
+            { label: "Product Manager", value: "productManager" },
           ]}
           error={displayError(formik.errors.jobType, formik.touched.jobType)}
           placeholder="Select a job type"

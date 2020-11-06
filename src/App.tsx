@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react"
 import { Stack, Card, CardSection } from "@kiwicom/orbit-components"
-import SignUpFormHook from "./SignUpForm/SignUpFormHook";
-import SignUpFormContext from "./SignUpForm/SignUpFormContext";
+import SignUpFormHook from "./SignUpForm/SignUpFormHook"
+import SignUpFormContext from "./SignUpForm/SignUpFormContext"
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         </CardSection>
       </Card>
     </Stack>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,13 +1,13 @@
-import React from "react";
-import { useField } from "formik";
-import { Select } from "@kiwicom/orbit-components";
-import { displayError } from "./helpers";
+import React from "react"
+import { useField } from "formik"
+import { Select } from "@kiwicom/orbit-components"
+import { displayError } from "./helpers"
 
 type Props = {
-  label: string;
-  name: string;
-  options: Array<{ label: string, value: string }>;
-  placeholder: string;
+  label: string
+  name: string
+  options: Array<{ label: string; value: string }>
+  placeholder: string
 }
 
 const FormikSelect = ({ label, name, options, placeholder }: Props) => {

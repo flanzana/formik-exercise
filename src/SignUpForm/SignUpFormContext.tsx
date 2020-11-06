@@ -1,15 +1,11 @@
 import React from "react"
-import { Formik, Form, FormikHelpers } from 'formik';
-import {
-  Stack,
-  Button,
-  Alert
-} from "@kiwicom/orbit-components"
+import { Formik, Form, FormikHelpers } from "formik"
+import { Stack, Button, Alert } from "@kiwicom/orbit-components"
 import { signUpValidate, signUpValidationSchema } from "./helpers"
-import { SignUpFormValues } from "./types";
-import FormikTextInputField from "../commonFormikComponents/FormikTextInputField";
-import FormikCheckbox from "../commonFormikComponents/FormikCheckbox";
-import FormikSelect from "../commonFormikComponents/FormikSelect";
+import { SignUpFormValues } from "./types"
+import FormikTextInputField from "../commonFormikComponents/FormikTextInputField"
+import FormikCheckbox from "../commonFormikComponents/FormikCheckbox"
+import FormikSelect from "../commonFormikComponents/FormikSelect"
 
 export default function SignUpFormContext() {
   return (
@@ -19,26 +15,23 @@ export default function SignUpFormContext() {
         lastName: "",
         email: "",
         terms: false,
-        jobType: ""
+        jobType: "",
       }}
       // validate={signUpValidate}
       validationSchema={signUpValidationSchema}
-      onSubmit={async (values: SignUpFormValues, { setStatus }: FormikHelpers<SignUpFormValues>) => {
-        await new Promise((r) => setTimeout(r, 1000))
+      onSubmit={async (
+        values: SignUpFormValues,
+        { setStatus }: FormikHelpers<SignUpFormValues>,
+      ) => {
+        await new Promise(r => setTimeout(r, 1000))
         setStatus("success")
       }}
     >
       {({ isSubmitting, values, status }) => (
         <Form>
           <Stack spacing="loose">
-            <FormikTextInputField
-              label="First Name"
-              name="firstName"
-            />
-            <FormikTextInputField
-              label="Last Name"
-              name="lastName"
-            />
+            <FormikTextInputField label="First Name" name="firstName" />
+            <FormikTextInputField label="Last Name" name="lastName" />
             <FormikTextInputField
               label="Email Address"
               name="email"
@@ -51,14 +44,11 @@ export default function SignUpFormContext() {
                 { label: "Designer", value: "designer" },
                 { label: "Developer", value: "developer" },
                 { label: "QA Tester", value: "qaTester" },
-                { label: "Product Manager", value: "productManager" }
+                { label: "Product Manager", value: "productManager" },
               ]}
               placeholder="Select a job type"
             />
-            <FormikCheckbox
-              label="I accept the terms and conditions"
-              name="terms"
-            />
+            <FormikCheckbox label="I accept the terms and conditions" name="terms" />
             <Button submit loading={isSubmitting}>
               Submit
             </Button>

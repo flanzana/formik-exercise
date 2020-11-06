@@ -1,10 +1,10 @@
-import React from "react";
-import { useField } from "formik";
-import { Checkbox, Stack, Text } from "@kiwicom/orbit-components";
+import React from "react"
+import { useField } from "formik"
+import { Checkbox, Stack, Text } from "@kiwicom/orbit-components"
 
 type Props = {
-  label: string;
-  name: string;
+  label: string
+  name: string
 }
 
 const FormikCheckbox = ({ label, name }: Props) => {
