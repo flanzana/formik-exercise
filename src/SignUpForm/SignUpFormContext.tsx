@@ -1,7 +1,7 @@
 import React from "react"
 import { Formik, Form, FormikHelpers } from "formik"
 import { Stack, Button, Alert } from "@kiwicom/orbit-components"
-import { signUpValidate, signUpValidationSchema } from "./helpers"
+import { signUpValidationSchema } from "./helpers"
 import { SignUpFormValues } from "./types"
 import FormikTextInputField from "../commonFormikComponents/FormikTextInputField"
 import FormikCheckbox from "../commonFormikComponents/FormikCheckbox"
