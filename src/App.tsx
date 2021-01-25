@@ -1,15 +1,13 @@
 import React, { useState } from "react"
-import { Stack, Card, CardSection, Button, ButtonGroup } from "@kiwicom/orbit-components"
-import SignUpFormHook from "./SignUpForm/SignUpFormHook"
-import SignUpFormContext from "./SignUpForm/SignUpFormContext"
-import SportEquipmentSingleForm from "./SportEquipmentForm/SportEquipmentSingleForm"
+import { Stack, Separator, Button, ButtonGroup, TextLink } from "@kiwicom/orbit-components"
+import FormikApp from "./formik/FormikApp"
+import ReactHookFormApp from "./reactHookForm/ReactHookFormApp"
 
-const FORM = {
-  SIGNUP_SINGLE_STEP: "signup_single",
-  SPORT_SINGLE_STEP: "sport_single",
-  SPORT_MULTI_STEP: "sport_multi",
+const LIBRARY = {
+  FORMIK: "formik",
+  REACT_HOOK_FORM: "react_hook_form",
 }
-const { SIGNUP_SINGLE_STEP, SPORT_SINGLE_STEP, SPORT_MULTI_STEP } = FORM
+const { FORMIK, REACT_HOOK_FORM } = LIBRARY
 
 type SelectionButtonProps = {
   onClick: () => void
@@ -18,49 +16,56 @@ type SelectionButtonProps = {
 }
 
 const SelectionButton = ({ onClick, label, isActive }: SelectionButtonProps) => (
-  <Button onClick={onClick} size="small" type={isActive ? "secondary" : "white"}>
+  <Button onClick={onClick} size="small" type={isActive ? "primary" : "white"}>
     {label}
   </Button>
 )
 
+const Link = ({ href, label }: { href: string; label: string }) => (
+  <TextLink href={href} external size="small">
+    {label}
+  </TextLink>
+)
+
 function App() {
-  const [displayedForm, setDisplayedForm] = useState(SPORT_SINGLE_STEP)
+  const [displayedLibrary, setDisplayedLibrary] = useState(REACT_HOOK_FORM)
 
   return (
-    <Stack spacing="extraLoose">
+    <Stack>
       <ButtonGroup>
         <SelectionButton
-          onClick={() => setDisplayedForm(SIGNUP_SINGLE_STEP)}
-          label="Single-step form (Sign up)"
-          isActive={displayedForm === SIGNUP_SINGLE_STEP}
+          onClick={() => setDisplayedLibrary(FORMIK)}
+          label="formik library"
+          isActive={displayedLibrary === FORMIK}
         />
         <SelectionButton
-          onClick={() => setDisplayedForm(SPORT_SINGLE_STEP)}
-          label="Single-step form (Add sport equipment)"
-          isActive={displayedForm === SPORT_SINGLE_STEP}
-        />
-        <SelectionButton
-          onClick={() => setDisplayedForm(SPORT_MULTI_STEP)}
-          label="Multi-step form (Add sport equipment)"
-          isActive={displayedForm === SPORT_MULTI_STEP}
+          onClick={() => setDisplayedLibrary(REACT_HOOK_FORM)}
+          label="react-hook-form library"
+          isActive={displayedLibrary === REACT_HOOK_FORM}
         />
       </ButtonGroup>
-      {displayedForm === SIGNUP_SINGLE_STEP && (
-        <Stack direction="row">
-          <Card title="Sign Up Form (useFormik hook)">
-            <CardSection>
-              <SignUpFormHook />
-            </CardSection>
-          </Card>
-          <Card title="Sign Up Form (Formik context)">
-            <CardSection>
-              <SignUpFormContext />
-            </CardSection>
-          </Card>
-        </Stack>
+      <Separator />
+      {displayedLibrary === FORMIK && (
+        <>
+          <Link href="https://formik.org/docs/api/formik" label="formik documentation" />
+          <FormikApp />
+        </>
       )}
-      {displayedForm === SPORT_SINGLE_STEP && <SportEquipmentSingleForm />}
-      {displayedForm === SPORT_MULTI_STEP && "TODO"}
+      {displayedLibrary === REACT_HOOK_FORM && (
+        <>
+          <Stack direction="column" spacing="tight">
+            <Link
+              href="https://react-hook-form.com/get-started"
+              label="react-hook-form documentation"
+            />
+            <Link
+              href="https://github.com/react-hook-form/react-hook-form/tree/master/examples"
+              label="react-hook-form examples"
+            />
+          </Stack>
+          <ReactHookFormApp />
+        </>
+      )}
     </Stack>
   )
 }
