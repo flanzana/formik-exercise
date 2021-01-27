@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Stack, Button, ButtonGroup } from "@kiwicom/orbit-components"
+import SignUpForm from "./SignUpForm/SignUpForm"
 
 const FORM = {
   SIGNUP_SINGLE_STEP: "signup_single",
@@ -42,7 +43,7 @@ function ReactHookFormApp() {
           isActive={displayedForm === SPORT_MULTI_STEP}
         />
       </ButtonGroup>
-      {displayedForm === SIGNUP_SINGLE_STEP && "TODO signup"}
+      {displayedForm === SIGNUP_SINGLE_STEP && <SignUpForm />}
       {displayedForm === SPORT_SINGLE_STEP && "TODO sport single"}
       {displayedForm === SPORT_MULTI_STEP && "TODO sport multiform"}
     </Stack>
