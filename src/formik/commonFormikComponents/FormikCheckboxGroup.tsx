@@ -18,7 +18,7 @@ type Props = {
 
 // TODO validationSchema not working for group checkboxes (you can submit without checking anything)
 const FormikCheckboxGroup = ({ label, name, options }: Props) => {
-  const [field, meta] = useField(name)
+  const [, meta] = useField(name)
   return (
     // @ts-ignore TODO
     <ChoiceGroup

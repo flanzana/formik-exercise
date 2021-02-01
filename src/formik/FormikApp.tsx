@@ -7,9 +7,8 @@ import SportEquipmentSingleForm from "./SportEquipmentForm/SportEquipmentSingleF
 const FORM = {
   SIGNUP_SINGLE_STEP: "signup_single",
   SPORT_SINGLE_STEP: "sport_single",
-  SPORT_MULTI_STEP: "sport_multi",
 }
-const { SIGNUP_SINGLE_STEP, SPORT_SINGLE_STEP, SPORT_MULTI_STEP } = FORM
+const { SIGNUP_SINGLE_STEP, SPORT_SINGLE_STEP } = FORM
 
 type SelectionButtonProps = {
   onClick: () => void
@@ -39,11 +38,6 @@ function FormikApp() {
           label="Single-step form (Add sport equipment)"
           isActive={displayedForm === SPORT_SINGLE_STEP}
         />
-        <SelectionButton
-          onClick={() => setDisplayedForm(SPORT_MULTI_STEP)}
-          label="Multi-step form (Add sport equipment)"
-          isActive={displayedForm === SPORT_MULTI_STEP}
-        />
       </ButtonGroup>
       {displayedForm === SIGNUP_SINGLE_STEP && (
         <Stack direction="row">
@@ -60,7 +54,6 @@ function FormikApp() {
         </Stack>
       )}
       {displayedForm === SPORT_SINGLE_STEP && <SportEquipmentSingleForm />}
-      {displayedForm === SPORT_MULTI_STEP && "TODO"}
     </Stack>
   )
 }
