@@ -29,7 +29,6 @@ import { SportEquipmentValues } from "./services/types";
 import FieldWithHeading from "../../formik/SportEquipmentForm/components/common/FieldWithHeading"
 import FormTextInputField from "./common/FormTextInputField"
 
-// just a note: undefined default value is still showing warning console message. It will be fixed in https://github.com/react-hook-form/react-hook-form/issues/2990
 const defaultValues = {
   equipmentType: undefined,
   passenger: undefined,
@@ -45,7 +44,7 @@ const ruleOnlyNumbers = { value: /^[0-9]+$/, message: "Only numbers are allowed.
 
 export default function SportEquipmentForm() {
   const [submittedValues, setSubmittedValues] = useState("")
-  const { control, handleSubmit, errors, clearErrors, formState, reset, getValues } = useForm<
+  const { control, handleSubmit, clearErrors, formState, reset, getValues } = useForm<
     SportEquipmentValues
   >({
     defaultValues,
@@ -59,6 +58,8 @@ export default function SportEquipmentForm() {
     setSubmittedValues(JSON.stringify(data, null, 2))
     reset(defaultValues)
   }
+
+  const { errors, isSubmitting } = formState
 
   return (
     <>
@@ -75,16 +76,16 @@ export default function SportEquipmentForm() {
                 name="equipmentType"
                 control={control}
                 rules={{ required: "Required equipment type" }}
-                render={props => (
+                render={({ field }) => (
                   <Select
                     label="Sport equipment"
-                    name={props.name}
-                    value={props.value}
+                    name={field.name}
+                    value={field.value}
                     onChange={ev => {
                       clearErrors("equipmentType")
-                      props.onChange(ev)
+                      field.onChange(ev)
                     }}
-                    onBlur={props.onBlur}
+                    onBlur={field.onBlur}
                     error={errors.equipmentType?.message}
                     options={equipmentOptions}
                     placeholder="Select your equipment"
@@ -98,23 +99,23 @@ export default function SportEquipmentForm() {
                 name="passenger"
                 control={control}
                 rules={{ required: "Required passenger" }}
-                render={props => (
+                render={({ field }) => (
                   <ChoiceGroup
                     label="Passenger"
                     onChange={ev => {
                       clearErrors("passenger")
-                      props.onChange(ev)
+                      field.onChange(ev)
                     }}
                     error={errors.passenger?.message}
                   >
                     {passengerOptions.map(option => (
                       <Radio
                         key={option.value}
-                        name={props.name}
+                        name={field.name}
                         label={option.label}
                         value={option.value}
-                        checked={option.value === props.value}
-                        onChange={props.onChange}
+                        checked={option.value === field.value}
+                        onChange={field.onChange}
                       />
                     ))}
                   </ChoiceGroup>
@@ -128,61 +129,65 @@ export default function SportEquipmentForm() {
                   values.equipmentType,
                 )} for ${getPassengerName(values.passenger)}`}</Heading>
                 <Stack direction="column" mediumMobile={{ direction: "row" }}>
-                  <FormTextInputField
+                  <FormTextInputField<SportEquipmentValues>
                     label="Length (cm)"
-                    name="length"
-                    control={control}
-                    rules={{
-                      valueAsNumber: true,
-                      required: { value: true, message: "Required length" },
-                      min: { value: 1, message: "Must be 1 cm or more" },
-                      max: { value: 200, message: "Must be 2 meters or less" },
-                      pattern: ruleOnlyNumbers,
+                    controllerProps={{
+                      name: "length",
+                      control,
+                      rules: {
+                        // valueAsNumber: true,
+                        required: { value: true, message: "Required length" },
+                        min: { value: 1, message: "Must be 1 cm or more" },
+                        max: { value: 200, message: "Must be 2 meters or less" },
+                        pattern: ruleOnlyNumbers,
+                      },
                     }}
                     clearErrors={clearErrors}
-                    errors={errors}
                   />
-                  <FormTextInputField
+                  <FormTextInputField<SportEquipmentValues>
                     label="Width (cm)"
-                    name="width"
-                    control={control}
-                    rules={{
-                      valueAsNumber: true,
-                      required: { value: true, message: "Required width" },
-                      min: { value: 1, message: "Must be 1 cm or more" },
-                      max: { value: 200, message: "Must be 2 meters or less" },
-                      pattern: ruleOnlyNumbers,
+                    controllerProps={{
+                      name: "width",
+                      control,
+                      rules: {
+                        // valueAsNumber: true,
+                        required: { value: true, message: "Required width" },
+                        min: { value: 1, message: "Must be 1 cm or more" },
+                        max: { value: 200, message: "Must be 2 meters or less" },
+                        pattern: ruleOnlyNumbers,
+                      },
                     }}
                     clearErrors={clearErrors}
-                    errors={errors}
                   />
-                  <FormTextInputField
+                  <FormTextInputField<SportEquipmentValues>
                     label="Height (cm)"
-                    name="height"
-                    control={control}
-                    rules={{
-                      valueAsNumber: true,
-                      required: { value: true, message: "Required height" },
-                      min: { value: 1, message: "Must be 1 cm or more" },
-                      max: { value: 200, message: "Must be 2 meters or less" },
-                      pattern: ruleOnlyNumbers,
+                    controllerProps={{
+                      name: "height",
+                      control,
+                      rules: {
+                        // valueAsNumber: true,
+                        required: { value: true, message: "Required height" },
+                        min: { value: 1, message: "Must be 1 cm or more" },
+                        max: { value: 200, message: "Must be 2 meters or less" },
+                        pattern: ruleOnlyNumbers,
+                      },
                     }}
                     clearErrors={clearErrors}
-                    errors={errors}
                   />
-                  <FormTextInputField
+                  <FormTextInputField<SportEquipmentValues>
                     label="Weight (kg)"
-                    name="weight"
-                    control={control}
-                    rules={{
-                      valueAsNumber: true,
-                      required: { value: true, message: "Required weight" },
-                      min: { value: 0, message: "Must be more than 0 kg" },
-                      max: { value: 100, message: "Must be 100 kg or less" },
-                      pattern: ruleOnlyNumbers,
+                    controllerProps={{
+                      name: "weight",
+                      control,
+                      rules: {
+                        // valueAsNumber: true,
+                        required: { value: true, message: "Required weight" },
+                        min: { value: 0, message: "Must be more than 0 kg" },
+                        max: { value: 100, message: "Must be 100 kg or less" },
+                        pattern: ruleOnlyNumbers,
+                      },
                     }}
                     clearErrors={clearErrors}
-                    errors={errors}
                   />
                 </Stack>
               </>
@@ -198,15 +203,15 @@ export default function SportEquipmentForm() {
                     isNothingSelected: value => Object.values(value).some(Boolean),
                   },
                 }}
-                render={props => (
+                render={({ field }) => (
                   <ChoiceGroup
                     label="Flights"
                     onChange={ev => {
                       const value = (ev.target as HTMLInputElement).value
                       clearErrors("flights")
-                      props.onChange({
-                        ...props.value,
-                        [value]: !props.value[value],
+                      field.onChange({
+                        ...field.value,
+                        [value]: !field.value[value],
                       })
                     }}
                     error={errors.flights ? "Select at least 1 flight" : null}
@@ -214,11 +219,11 @@ export default function SportEquipmentForm() {
                     {flightsOptions.map(option => (
                       <Checkbox
                         key={option.value}
-                        name={props.name}
+                        name={field.name}
                         label={option.label}
                         value={option.value}
-                        checked={props.value[option.value]}
-                        onChange={props.onChange}
+                        checked={field.value[option.value]}
+                        onChange={field.onChange}
                       />
                     ))}
                   </ChoiceGroup>
@@ -240,17 +245,17 @@ export default function SportEquipmentForm() {
                   name="terms"
                   control={control}
                   rules={{ required: true }}
-                  render={props => (
+                  render={({ field }) => (
                     <Stack spacing="extraTight">
                       <Checkbox
                         label="I accept the terms and conditions"
-                        name={props.name}
-                        value={props.value}
+                        name={field.name}
+                        value={field.value.toString()}
                         onChange={() => {
                           clearErrors("terms")
-                          props.onChange(!props.value)
+                          field.onChange(!field.value)
                         }}
-                        checked={props.value}
+                        checked={field.value}
                         hasError={Boolean(errors.terms?.type)}
                       />
                       {errors.terms?.type ? (
@@ -264,7 +269,7 @@ export default function SportEquipmentForm() {
               </>
             </FieldWithHeading>
 
-            <Button submit loading={formState.isSubmitting}>
+            <Button submit loading={isSubmitting}>
               Submit request
             </Button>
 

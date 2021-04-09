@@ -15,7 +15,6 @@ export default function SignUpForm() {
   const {
     control,
     handleSubmit,
-    errors,
     clearErrors,
     formState,
     reset,
@@ -36,6 +35,7 @@ export default function SignUpForm() {
     // shouldFocusError,
     // shouldUnregister,
   })
+  const { errors, isSubmitting } = formState
 
   return (
     <>
@@ -60,18 +60,19 @@ export default function SignUpForm() {
                 pattern: { value: /^[a-zA-Z]+$/, message: "Only letters are allowed." },
               }}
               render={(
-                { name, value, onChange, onBlur } /*, { invalid, isDirty, isTouched } */,
+                // { name, value, onChange, onBlur } /*, { invalid, isDirty, isTouched } */, // in v6
+                { field, fieldState }, // in v7
               ) => (
                 <InputField
                   label="Name"
                   type="text"
-                  name={name}
-                  value={value}
+                  name={field.name}
+                  value={field.value}
                   onChange={ev => {
                     clearErrors("name")
-                    onChange(ev)
+                    field.onChange(ev)
                   }}
-                  onBlur={onBlur}
+                  onBlur={field.onBlur}
                   error={errors.name?.message}
                 />
               )}
@@ -87,17 +88,17 @@ export default function SignUpForm() {
                   message: "Invalid email address",
                 },
               }}
-              render={props => (
+              render={({ field }) => (
                 <InputField
                   label="Email Address"
                   type="text"
-                  name={props.name}
-                  value={props.value}
+                  name={field.name}
+                  value={field.value}
                   onChange={ev => {
                     clearErrors("email")
-                    props.onChange(ev)
+                    field.onChange(ev)
                   }}
-                  onBlur={props.onBlur}
+                  onBlur={field.onBlur}
                   error={errors.email?.message}
                 />
               )}
@@ -109,16 +110,16 @@ export default function SignUpForm() {
               rules={{
                 required: "Required job type",
               }}
-              render={props => (
+              render={({field}) => (
                 <Select
                   label="Job Type"
-                  name={props.name}
-                  value={props.value}
+                  name={field.name}
+                  value={field.value}
                   onChange={ev => {
                     clearErrors("jobType")
-                    props.onChange(ev)
+                    field.onChange(ev)
                   }}
-                  onBlur={props.onBlur}
+                  onBlur={field.onBlur}
                   error={errors.jobType?.message}
                   options={[
                     { label: "Designer", value: "designer" },
@@ -135,17 +136,17 @@ export default function SignUpForm() {
               name="terms"
               control={control}
               rules={{ required: true }}
-              render={props => (
+              render={({field}) => (
                 <Stack spacing="extraTight">
                   <Checkbox
                     label="I accept the terms and conditions"
-                    name={props.name}
-                    value={props.value}
+                    name={field.name}
+                    value={field.value.toString()}
                     onChange={() => {
                       clearErrors("terms")
-                      props.onChange(!props.value)
+                      field.onChange(!field.value)
                     }}
-                    checked={props.value}
+                    checked={field.value}
                     hasError={Boolean(errors.terms?.type)}
                   />
                   {errors.terms?.type ? (
@@ -157,7 +158,7 @@ export default function SignUpForm() {
               )}
             />
 
-            <Button submit loading={formState.isSubmitting}>
+            <Button submit loading={isSubmitting}>
               Submit
             </Button>
 
